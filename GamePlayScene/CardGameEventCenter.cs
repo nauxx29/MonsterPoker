@@ -46,6 +46,7 @@ public class CardGameEventCenter_Pho : MonoBehaviour
         switch (state)
         {
             case GameState.Deal:
+                playerDoneId.Clear();
                 if (PhotonNetwork.IsMasterClient)
                 {
                     if (gameRound == GAME_TOTAL)
@@ -61,13 +62,13 @@ public class CardGameEventCenter_Pho : MonoBehaviour
                 break;
             case GameState.Calc:
                 Events.onCalc.Invoke();
-                Events.onClockCountDown.Invoke(true);
+                Events.onClockCountDown.Invoke(true, false);
                 break;
             case GameState.UpdateTime:
-                Events.onClockCountDown.Invoke(false);
+                Events.onClockCountDown.Invoke(false, false);
                 break;
             case GameState.NaUpdateTime:
-                Events.onClockCountDown.Invoke(false);
+                Events.onClockCountDown.Invoke(false, true);
                 break;
             case GameState.ShowResult:
                 // show result
@@ -162,15 +163,10 @@ public class CardGameEventCenter_Pho : MonoBehaviour
 
     [PunRPC]
     private void RPC_CheckAllPlayerDone(int id, GameState state)
-    { 
+    {
         if (!playerDoneId.Contains(id))
         {
             playerDoneId.Add(id);
-            if(state == GameState.Deal)
-            {
-                Debug.Log(id);
-            }
-
             if (playerDoneId.Count == PhotonNetwork.PlayerList.Length)
             {
                 playerDoneId.Clear();
