@@ -23,7 +23,7 @@ public static class Events
     public static readonly Evt onAnswer = new Evt();
 
     // for game result
-    public static readonly Evt<bool> onClockCountDown = new Evt<bool>();
+    public static readonly Evt<bool, bool> onClockCountDown = new Evt<bool, bool>();
     public static readonly Evt onCalcDoneChangeColor = new Evt();
     public static readonly Evt onTimeUpShow = new Evt();
     public static readonly Evt<bool> onWaiting = new Evt<bool>();

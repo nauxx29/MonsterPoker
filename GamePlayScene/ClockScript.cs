@@ -31,7 +31,7 @@ public class ClockScript : MonoBehaviourPunCallbacks
         }
     }
 
-    private void HandleClockEvent(bool shouldKeepCounting)
+    private void HandleClockEvent(bool shouldKeepCounting,  bool isNA)
     {
         isActive = shouldKeepCounting;
 
@@ -41,7 +41,10 @@ public class ClockScript : MonoBehaviourPunCallbacks
             _timeRecordSO.TimeRecordUpdate(gameTime); 
             _anim.Play("New State");
             Events.onCalcDoneChangeColor.Invoke();
-            Events.onCheckAllPlayerDone.Invoke(PhotonNetwork.LocalPlayer.ActorNumber, GameState.ShowResult);
+            if (isNA)
+            {
+                Events.onCheckAllPlayerDone.Invoke(PhotonNetwork.LocalPlayer.ActorNumber, GameState.ShowResult);
+            }
         }
     }
     private void ClockCountDown()
